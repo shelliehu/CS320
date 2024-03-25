@@ -1,0 +1,283 @@
+{
+  "project": {
+    "id": "fgdmgv",
+    "name": "CS320",
+    "creationTs": 1711393301414,
+    "lastModifiedTs": 1711394512923
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "input_image_951srf",
+        "nodeSpecId": "input_image",
+        "customData": {
+          "initialWidth": 448,
+          "initialHeight": 240,
+          "previewX": 16,
+          "previewY": 16,
+          "previewWidth": 448,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 0,
+          "posY": 128.75,
+          "width": 176,
+          "height": 180,
+          "selected": false
+        },
+        "propValues": {
+          "urls": [
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic1.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic2.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic3.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic4.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic5.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic6.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic7.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic8.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic9.jpg"
+          ],
+          "gridColumnCount": 3,
+          "allowUserUpload": false,
+          "selectedImageUrl": "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic8.jpg",
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "body_segmentation_zbdhtt",
+        "nodeSpecId": "body_segmentation",
+        "customData": {
+          "previewX": 816,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 336,
+          "posY": 210.5,
+          "width": 181.29345703125,
+          "height": 105,
+          "selected": false
+        },
+        "propValues": {
+          "modelOption": "MediaPipeSelfieSegmentation"
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_pnzqpo",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "mask_visualizer_stjh48",
+        "nodeSpecId": "mask_visualizer",
+        "customData": {
+          "previewX": 480,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 677.29345703125,
+          "posY": 129.25,
+          "width": 176,
+          "height": 179,
+          "selected": false
+        },
+        "propValues": {
+          "mode": "fg-image",
+          "hidePreview": true
+        },
+        "inputValues": {
+          "color": "#22e8dd"
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_pnzqpo",
+              "outputId": "image"
+            }
+          ],
+          "segmentationResult": [
+            {
+              "sourceNodeId": "body_segmentation_zbdhtt",
+              "outputId": "segmentationResult"
+            }
+          ]
+        }
+      },
+      {
+        "id": "face_landmark_m9cb4z",
+        "nodeSpecId": "face_landmark",
+        "customData": {
+          "previewX": 832,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1013.29345703125,
+          "posY": 32,
+          "width": 176,
+          "height": 141,
+          "selected": false
+        },
+        "inputValues": {
+          "staticImage": false
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "mask_visualizer_stjh48",
+              "outputId": "maskedImage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "landmark_visualizer_z329k9",
+        "nodeSpecId": "landmark_visualizer",
+        "customData": {
+          "previewX": 816,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1349.29345703125,
+          "posY": 0,
+          "width": 185.603515625,
+          "height": 205,
+          "selected": false
+        },
+        "propValues": {
+          "keypointScale": 1,
+          "color": "#08f7fe",
+          "boundingBox": false,
+          "hidePreview": false
+        },
+        "incomingEdges": {
+          "landmarkResult": [
+            {
+              "sourceNodeId": "face_landmark_m9cb4z",
+              "outputId": "landmarkResult"
+            }
+          ],
+          "image": [
+            {
+              "sourceNodeId": "mask_visualizer_stjh48",
+              "outputId": "maskedImage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "virtual_sticker_ony6xl",
+        "nodeSpecId": "virtual_sticker",
+        "customData": {
+          "previewX": 16,
+          "previewY": 272,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1354.09521484375,
+          "posY": 241,
+          "width": 176,
+          "height": 255,
+          "selected": false
+        },
+        "propValues": {
+          "anchor": "nose",
+          "scale": 1.26,
+          "offsetX": 0,
+          "offsetY": -200,
+          "hidePreview": false
+        },
+        "incomingEdges": {
+          "landmarkResult": [
+            {
+              "sourceNodeId": "face_landmark_m9cb4z",
+              "outputId": "landmarkResult"
+            }
+          ],
+          "stickerImage": [
+            {
+              "sourceNodeId": "input_image_6zmkhu",
+              "outputId": "image"
+            }
+          ],
+          "originalImage": [
+            {
+              "sourceNodeId": "mask_visualizer_stjh48",
+              "outputId": "maskedImage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "input_image_6zmkhu",
+        "nodeSpecId": "input_image",
+        "customData": {
+          "initialWidth": 448,
+          "initialHeight": 240,
+          "previewX": 352,
+          "previewY": 272,
+          "previewWidth": 448,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1013.29345703125,
+          "posY": 271.5,
+          "width": 176,
+          "height": 180,
+          "selected": false
+        },
+        "propValues": {
+          "urls": [
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic1.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic2.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic3.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic4.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic5.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic6.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic7.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic8.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic9.jpg"
+          ],
+          "gridColumnCount": 3,
+          "allowUserUpload": false,
+          "selectedImageUrl": "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic4.jpeg",
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "live_camera_pnzqpo",
+        "nodeSpecId": "live_camera",
+        "customData": {
+          "runContinuously": true,
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "previewX": 1152,
+          "previewY": 16,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": 16,
+          "posY": 384,
+          "width": 176,
+          "height": 105,
+          "selected": true
+        },
+        "propValues": {
+          "hidePreview": true
+        }
+      }
+    ]
+  },
+  "customNodeUrls": []
+}
